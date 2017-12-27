@@ -1,0 +1,16 @@
+*{
+	padding: 0 0;
+	margin: 0 0;
+}
+
+html,body{
+	height: 100%;
+}
+
+.fullPage{
+	position: absolute;
+	height: calc(100% - 38px);
+	width: 100%;
+	background: #CCC;
+	/*cursor: none;*/
+}
