@@ -19,6 +19,11 @@
                 e.preventDefault();
                 $("#wrapper").toggleClass("toggled");
             });
+
+            $("#myCanvas").click(function(e){
+                if($("#wrapper").hasClass("toggled"))
+                    $("#wrapper").toggleClass("toggled");
+            })
         })
     </script>
 </head>
