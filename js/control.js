@@ -255,7 +255,7 @@ $(document).ready(function() {
         follower.items.body.play();
 
         $('#myCanvas').on("click", handleClick);
-        $('#shuten_skin,#ibaraki_skin').on("change", handleChangeSkin);
+        $('#shuten_hair,#ibaraki_hair').on("change", handleChangeHair);
         $('#shuten_cloth,#ibaraki_cloth').on("change", handleChangeCloth);
 
         //调用tick方法
@@ -275,9 +275,9 @@ $(document).ready(function() {
     }
 
     // 變更頭髮
-    function handleChangeSkin() {
-        leader.items["hair"].gotoAndStop(parseInt($('#shuten_skin').val()));
-        follower.items["hair"].gotoAndStop(parseInt($('#ibaraki_skin').val()));
+    function handleChangeHair() {
+        leader.items["hair"].gotoAndStop(parseInt($('#shuten_hair').val()));
+        follower.items["hair"].gotoAndStop(parseInt($('#ibaraki_hair').val()));
     }
 
     // 變更衣服

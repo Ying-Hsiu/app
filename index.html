@@ -1,52 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Copycat</title>
+	<!-- Bootstrap core CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/simple-sidebar.css">
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
     <script src="js/control.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#menu-toggle").click(function(e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        })
+    </script>
 </head>
 <body>
-	<div>
-		<b for="shuten_skin">酒吞皮</b>
-		<select name="" id="shuten_skin">
-			<option value="0">未覺醒</option>
-			<option value="1">覺醒</option>
-			<option value="2">酒歌狂行</option>	
-			<option value="3">哈哈哈哈</option>		
-		</select>
-	  	<b for="shuten_cloth">酒吞衣</b>
-	  	<select name="" id="shuten_cloth">
-			<option value="0">胖次</option>
-			<option value="1">馬賽克</option>
-			<option value="2">葉子</option>	
-			<option value="3">兜擋布</option>	
-			<option value="4">原始皮1</option>
-			<!-- <option value="5">原始皮2</option>			 -->
-			<option value="6">皮膚</option>			
-		</select>
-	  	<br>
-		<b for="ibaraki_skin">茨木皮</b>
-		<select name="" id="ibaraki_skin">
-			<option value="0">未覺醒</option>
-			<option value="1">覺醒</option>
-			<option value="2">地獄鬼手</option>	
-			<option value="3">青竹白雪</option>		
-		</select>
-	  	<b for="ibaraki_cloth">茨木衣</b>
-	  	<select name="" id="ibaraki_cloth">
-			<option value="0">胖次</option>
-			<option value="1">馬賽克</option>
-			<option value="2">葉子</option>		
-			<option value="3">兜擋布</option>
-			<option value="7">原始皮2</option>
-			<option value="8">皮膚1</option>			
-			<option value="9">皮膚2</option>			
+	<div id="wrapper">
+        <div id="sidebar-wrapper">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">酒吞</h4>
+                <h6 class="card-subtitle mb-2 text-muted">外觀設定 ಠ_ಠ</h6>
+                <label for="shuten_hair" class="col-form-label">頭髮</label>
+                <select class="form-control" id="shuten_hair">
+                  <option value="0">初始頭</option>
+                  <option value="1">覺醒頭</option>
+                  <option value="2">酒歌狂行</option>
+                  <option value="3">剃度</option>
+                </select>
+                <label for="shuten_cloth" class="col-form-label">衣著</label>
+                <select class="form-control" id="shuten_cloth">
+                  <option value="0">紅胖次</option>
+                  <option value="1">馬賽克</option>
+                  <option value="2">一片葉子</option>
+                  <option value="3">兜襠布</option>
+                  <option value="4">初始皮</option>
+                  <option value="5">覺醒皮</option>
+                  <option value="6">酒歌狂行</option>
+                </select>
+              </div>
+            </div>
+            <hr>
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">茨木</h4>
+                <h6 class="card-subtitle mb-2 text-muted">外觀設定 (´,,•ω•,,)♡</h6>
+                <label for="ibaraki_hair" class="col-form-label">頭髮</label>
+                <select class="form-control" id="ibaraki_hair">
+                  <option value="0">初始頭</option>
+                  <option value="1">覺醒頭</option>
+                  <option value="2">紅馬尾</option>
+                  <option value="3">白馬尾</option>
+                </select>
+                <label for="ibaraki_cloth" class="col-form-label">衣著</label>
+                <select class="form-control" id="ibaraki_cloth">
+                  <option value="0">紅胖次</option>
+                  <option value="1">馬賽克</option>
+                  <option value="2">一片葉子</option>
+                  <option value="3">兜襠布</option>
+                  <option value="7">覺醒皮</option>
+                  <option value="8">地獄鬼手</option>
+                  <option value="9">青竹白雪</option>
+                </select>
+              </div>
+            </div>
+            <br>
+            <div class="alert alert-primary" role="alert">
+              version 1.2.0 #2017/12/29
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+	            <canvas id="myCanvas" class="fullPage"></canvas>
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">MENU</a>
+            </div>
+        </div>
 
-		</select>
-	</div>
-	<canvas id="myCanvas" class="fullPage"></canvas>
+    </div>
 </body>
 </html>
