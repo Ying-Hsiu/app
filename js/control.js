@@ -353,23 +353,40 @@ $(document).ready(function() {
         }
     }
 
-    function normal() {
-        var tickXL = positionX - leader.items["body"].x - characterWidth / 2,
-            tickYL = positionY - leader.items["body"].y - characterHeight / 2,
-            tickXF = positionX - follower.items["body"].x - characterWidth / 2,
-            tickYF = positionY - follower.items["body"].y - characterHeight / 2;
+    function handleChilIndex(){
+        if(leader.items["body"].y > follower.items["body"].y){
+            stage.setChildIndex(follower.items["body"],0)
+            stage.setChildIndex(follower.items["hair"],1)
+            stage.setChildIndex(follower.items["hand"],2)
+            stage.setChildIndex(follower.items["face"],3)
+            stage.setChildIndex(follower.items["cloth"],4)
+            stage.setChildIndex(follower.items["dialog"],5)
+            stage.setChildIndex(leader.items["body"],6)
+            stage.setChildIndex(leader.items["hair"],7)
+            stage.setChildIndex(leader.items["hand"],8)
+            stage.setChildIndex(leader.items["face"],9)
+            stage.setChildIndex(leader.items["cloth"],10)
+            stage.setChildIndex(leader.items["dialog"],11)
+        }else{
+            stage.setChildIndex(leader.items["body"],0)
+            stage.setChildIndex(leader.items["hair"],2)
+            stage.setChildIndex(leader.items["hand"],1)
+            stage.setChildIndex(leader.items["face"],3)
+            stage.setChildIndex(leader.items["cloth"],4)
+            stage.setChildIndex(leader.items["dialog"],5)
+            stage.setChildIndex(follower.items["body"],6)
+            stage.setChildIndex(follower.items["hair"],7)
+            stage.setChildIndex(follower.items["hand"],8)
+            stage.setChildIndex(follower.items["face"],9)
+            stage.setChildIndex(follower.items["cloth"],10)
+            stage.setChildIndex(follower.items["dialog"],11)
+        }
+    }
 
-        var absX = Math.abs(leader.items["body"].x - follower.items["body"].x),
-            absY = Math.abs(leader.items["body"].y - follower.items["body"].y);
-
-        var apartX = leader.items["body"].x - follower.items["body"].x,
-            apartY = leader.items["body"].y - follower.items["body"].y;
-
-        /* 方向變換 */
-        handleDirection(tickXL,apartX);
+    function normal(tick,abs,apart) {
 
         /* 距離事件判斷 */
-        if (absX < 150 + (leader.turnLeft == follower.turnLeft ? 0 : 120) && absY < 150 + (leader.turnLef == follower.turnLeft ? 0 : 120)) {
+        if (abs["x"] < 150 + (leader.turnLeft == follower.turnLeft ? 0 : 120) && abs["y"] < 150 + (leader.turnLef == follower.turnLeft ? 0 : 120)) {
             handleEventDistance("1");
 
             leader.anima.shock_02();
@@ -377,28 +394,28 @@ $(document).ready(function() {
             handleStatus("near",5,8,function(){
                 if(rand==0){
                     if(leader.items["body"].x<0){
-                        positionX = leader.items["body"].x + absX*2;
+                        positionX = leader.items["body"].x + abs["x"]*2;
                     }else if(leader.items["body"].x>$(window).width()){
-                        positionX = leader.items["body"].x - absX*2;
+                        positionX = leader.items["body"].x - abs["x"]*2;
                     }else{
-                        positionX = leader.items["body"].x + absX*2 * (Math.random()*2|0 ? 1 : -1);
+                        positionX = leader.items["body"].x + abs["x"]*2 * (Math.random()*2|0 ? 1 : -1);
                     }
 
                     if(leader.items["body"].y<0){
-                        positionY = leader.items["body"].y + absY*2;
+                        positionY = leader.items["body"].y + abs["y"]*2;
                     }else if(leader.items["body"].y>$(window).height()){
-                        positionY = leader.items["body"].y - absY*2;
+                        positionY = leader.items["body"].y - abs["y"]*2;
                     }else{
-                        positionY = leader.items["body"].y + absY*2 * (Math.random()*2|0 ? 1 : -1);
+                        positionY = leader.items["body"].y + abs["y"]*2 * (Math.random()*2|0 ? 1 : -1);
                     }
                 }
             })
-        } else if (absX < 300 && absY < 300) {
+        } else if (abs["x"] < 300 && abs["y"] < 300) {
             handleEventDistance("2");
 
             leader.anima.shock_01();
             follower.anima.star_01();
-        } else if (absX < 500 && absY < 500) {
+        } else if (abs["x"] < 500 && abs["y"] < 500) {
             handleEventDistance("3");
 
             leader.anima.normal_01();
@@ -415,9 +432,9 @@ $(document).ready(function() {
             })
         }
 
-        if (Math.abs(tickXL) > 1 && Math.abs(tickYL) > 1) {
-            leader.items["body"].x += tickXL * leader.speed;
-            leader.items["body"].y += tickYL * leader.speed;
+        if (Math.abs(tick["lx"]) > 1 && Math.abs(tick["ly"]) > 1) {
+            leader.items["body"].x += tick["lx"] * leader.speed;
+            leader.items["body"].y += tick["ly"] * leader.speed;
             $.each(leader.items,function(key,value){
                 leader.items[key].x = leader.items["body"].x;
                 leader.items[key].y = leader.items["body"].y;
@@ -429,9 +446,9 @@ $(document).ready(function() {
             leader.items["body"].gotoAndStop(0);
         }
 
-        if ((absX < 500 && absY < 500) && (absX >= 100 + (leader.turnLeft == follower.turnLeft ? 0 : 120) || absY >= 100 + (leader.turnLeft == follower.turnLeft ? 0 : 120))) {
-            follower.items["body"].x += tickXF * follower.speed;
-            follower.items["body"].y += tickYF * follower.speed;
+        if ((abs["x"] < 500 && abs["y"] < 500) && (abs["x"] >= 100 + (leader.turnLeft == follower.turnLeft ? 0 : 120) || abs["y"] >= 100 + (leader.turnLeft == follower.turnLeft ? 0 : 120))) {
+            follower.items["body"].x += tick["fx"] * follower.speed;
+            follower.items["body"].y += tick["fy"] * follower.speed;
             $.each(follower.items,function(key,value){
                 follower.items[key].x = follower.items["body"].x;
                 follower.items[key].y = follower.items["body"].y;
@@ -450,26 +467,14 @@ $(document).ready(function() {
         
     }
 
-    function near() {
-        var tickXL = positionX - leader.items["body"].x - characterWidth / 2,
-            tickYL = positionY - leader.items["body"].y - characterHeight / 2,
-            tickXF = positionX - follower.items["body"].x - characterWidth / 2,
-            tickYF = positionY - follower.items["body"].y - characterHeight / 2;
-
-        var absX = Math.abs(leader.items["body"].x - follower.items["body"].x),
-            absY = Math.abs(leader.items["body"].y - follower.items["body"].y);
-
-        var apartX = leader.items["body"].x - follower.items["body"].x,
-            apartY = leader.items["body"].y - follower.items["body"].y;
+    function near(tick,abs,apart) {
 
         leader.anima.sign_01();
         follower.anima.talk_02();
 
-        handleDirection(tickXL,apartX);
-
-        if (Math.abs(tickXL) > 1 && Math.abs(tickYL) > 1) {
-            leader.items["body"].x += tickXL * leader.speed;
-            leader.items["body"].y += tickYL * leader.speed;
+        if (Math.abs(tick["lx"]) > 1 && Math.abs(tick["ly"]) > 1) {
+            leader.items["body"].x += tick["lx"] * leader.speed;
+            leader.items["body"].y += tick["ly"] * leader.speed;
             $.each(leader.items,function(key,value){
                 leader.items[key].x = leader.items["body"].x;
                 leader.items[key].y = leader.items["body"].y;
@@ -485,26 +490,14 @@ $(document).ready(function() {
     
     }
 
-    function far(){
-        var tickXL = positionX - leader.items["body"].x - characterWidth / 2,
-            tickYL = positionY - leader.items["body"].y - characterHeight / 2,
-            tickXF = positionX - follower.items["body"].x - characterWidth / 2,
-            tickYF = positionY - follower.items["body"].y - characterHeight / 2;
-
-        var absX = Math.abs(leader.items["body"].x - follower.items["body"].x),
-            absY = Math.abs(leader.items["body"].y - follower.items["body"].y);
-
-        var apartX = leader.items["body"].x - follower.items["body"].x,
-            apartY = leader.items["body"].y - follower.items["body"].y;
+    function far(tick,abs,apart){
 
         leader.anima.sign_02();
         follower.anima.cry_01();
 
-        handleDirection(tickXL,apartX);
-
         if (Math.abs(tickXL) > 1 && Math.abs(tickYL) > 1) {
-            leader.items["body"].x += tickXL * leader.speed;
-            leader.items["body"].y += tickYL * leader.speed;
+            leader.items["body"].x += tick["lx"] * leader.speed;
+            leader.items["body"].y += tick["ly"] * leader.speed;
             $.each(leader.items,function(key,value){
                 leader.items[key].x = leader.items["body"].x;
                 leader.items[key].y = leader.items["body"].y;
@@ -523,19 +516,37 @@ $(document).ready(function() {
 
     function tick(event) {
         var self = this;
+        var tick = {
+            lx: positionX - leader.items["body"].x - characterWidth / 2,
+            ly: positionY - leader.items["body"].y - characterHeight / 2,
+            fx: positionX - follower.items["body"].x - characterWidth / 2,
+            fy: positionY - follower.items["body"].y - characterHeight / 2
+        }
+        var abs = {
+            x : Math.abs(leader.items["body"].x - follower.items["body"].x),
+            y : Math.abs(leader.items["body"].y - follower.items["body"].y)
+        }
+        var apart = {
+            x : leader.items["body"].x - follower.items["body"].x,
+            y : leader.items["body"].y - follower.items["body"].y
+        }
+
+        /* 方向變換 */
+        handleDirection(tick["lx"],apart["x"]);
 
         //判斷status
         switch (status) {
             case "normal":
-                normal();
+                normal(tick,abs,apart);
                 break;
             case "near":
-                near();
+                near(tick,abs,apart);
                 break;
             case "far":
-                far();
+                far(tick,abs,apart);
                 break;
         }
+        handleChilIndex();
         stage.update();
     }
 
