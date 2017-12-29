@@ -495,7 +495,7 @@ $(document).ready(function() {
         leader.anima.sign_02();
         follower.anima.cry_01();
 
-        if (Math.abs(tick["lx"]) > 1 && Math.abs(tick["ly"]]) > 1) {
+        if (Math.abs(tick["lx"]) > 1 && Math.abs(tick["ly"]) > 1) {
             leader.items["body"].x += tick["lx"] * leader.speed;
             leader.items["body"].y += tick["ly"] * leader.speed;
             $.each(leader.items,function(key,value){
